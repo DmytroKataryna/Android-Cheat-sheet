@@ -1067,8 +1067,39 @@ class Employee {
    
 * <b>Blocking Queues:</b></br>
    * A blocking queue is a queue that blocks when you try to dequeue from it and the queue is empty, or if you try to enqueue items to it and the queue is already full. A thread trying to dequeue from an empty queue is blocked until some other thread inserts an item into the queue. A thread trying to enqueue an item in a full queue is blocked until some other thread makes space in the queue. 
-   * [Example on implementing a blocking queue](/src/queue/BlockingQueue.java)</br>
+   * Example on implementing a blocking queue
+   ```
+   public class BlockingQueue {
+
+    private List queue = new java.util.LinkedList();
+    private int limit;
+
+    public BlockingQueue(int limit) {
+        this.limit = limit;
+    }
+
+    public synchronized void enqueue(Object item) throws InterruptedException {
+        while (this.queue.size() == limit) {
+            wait();
+        }
+        if (this.queue.size() == 0) {
+            notifyAll();
+        }
+        this.queue.add(item);
+    }
+
+    public synchronized Object dequeue() throws InterruptedException {
+        while (this.queue.size() == 0) {
+            wait();
+        }
+        if (this.queue.size() == limit) {
+            notifyAll();
+        }
+        return this.queue.remove(0);
+    }
+}
    
+   ```
    
 * <b>Difference between stacks & queues?</b></br>
    * <a href="https://github.com/anitaa1990/Android-Cheat-sheet/blob/master/media/3.png" target="_blank"><img src="https://github.com/anitaa1990/Android-Cheat-sheet/blob/master/media/3.png"></a></br>   
@@ -1078,8 +1109,39 @@ class Employee {
    
 * <b>What is a deadlock in Java</b></br>
    * A deadlock occurs when a thread enters a waiting state because a requested system resource is held by another waiting process, which in turn is waiting for another resource held by another waiting process.
-   * [Example on how deadlock occurs](/src/deadlock/ThreadLockDemo.java)
-   * [Example on how to prevent deadlock](/src/deadlock/ThreadLockFixedDemo.java)</br>
+   * Example on how deadlock occurs
+   ```
+   
+   public class ThreadLockDemo {
+    /*
+     * This method request two locks, first Integer and then String
+     * */
+    public void method1() {
+        synchronized (Integer.class) {
+            System.out.println("Acquired lock on Integer.class object");
+        }
+        synchronized (String.class) {
+            System.out.println("Acquired lock on String.class object");
+        }
+    }
+
+    /*
+     * This method request two locks also, but in oppsite order.
+     * This creates potential deadlock, if one thread holds String lock and other holds Integer lock
+     * and they wait for each other, forever.
+     * */
+    public void method2() {
+        synchronized (String.class) {
+            System.out.println("Acquired lock on String.class object");
+        }
+        synchronized (Integer.class) {
+            System.out.println("Acquired lock on Integer.class object");
+        }
+    }
+}
+   
+   ```
+   
    
    
    
