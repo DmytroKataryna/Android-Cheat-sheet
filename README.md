@@ -1068,6 +1068,7 @@ class Employee {
 * <b>Blocking Queues:</b></br>
    * A blocking queue is a queue that blocks when you try to dequeue from it and the queue is empty, or if you try to enqueue items to it and the queue is already full. A thread trying to dequeue from an empty queue is blocked until some other thread inserts an item into the queue. A thread trying to enqueue an item in a full queue is blocked until some other thread makes space in the queue. 
    * Example on implementing a blocking queue
+   
    ```
    public class BlockingQueue {
 
@@ -1097,8 +1098,7 @@ class Employee {
         }
         return this.queue.remove(0);
     }
-}
-   
+  }
    ```
    
 * <b>Difference between stacks & queues?</b></br>
@@ -1110,12 +1110,11 @@ class Employee {
 * <b>What is a deadlock in Java</b></br>
    * A deadlock occurs when a thread enters a waiting state because a requested system resource is held by another waiting process, which in turn is waiting for another resource held by another waiting process.
    * Example on how deadlock occurs
-   ```
    
+   ```
    public class ThreadLockDemo {
-    /*
-     * This method request two locks, first Integer and then String
-     * */
+    
+    #This method request two locks, first Integer and then String
     public void method1() {
         synchronized (Integer.class) {
             System.out.println("Acquired lock on Integer.class object");
@@ -1125,11 +1124,10 @@ class Employee {
         }
     }
 
-    /*
-     * This method request two locks also, but in oppsite order.
-     * This creates potential deadlock, if one thread holds String lock and other holds Integer lock
-     * and they wait for each other, forever.
-     * */
+     
+     # This method request two locks also, but in oppsite order.
+     # This creates potential deadlock, if one thread holds String lock and other holds Integer lock
+     # and they wait for each other, forever.     
     public void method2() {
         synchronized (String.class) {
             System.out.println("Acquired lock on String.class object");
@@ -1138,12 +1136,9 @@ class Employee {
             System.out.println("Acquired lock on Integer.class object");
         }
     }
-}
+  }
    
    ```
-   
-   
-   
    
 * <b>What is the List interface & Set interface?</b></br>
    * List interface supports for ordered collection of objects and it may contain duplicates. The Set interface provides methods for accessing the elements of a finite mathematical set. Sets do not allow duplicate elements</br>
